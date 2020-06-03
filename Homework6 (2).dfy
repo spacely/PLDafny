@@ -45,8 +45,10 @@ ensures treeContains(tree, element) <==> listContains(flatten(tree), element)
     match tree {
         case Leaf => {}
         case Node(leftnode,rightnode,element) => {
-            assert listContains(flatten(tree),element) == listContains(flatten(leftnode,rightnode,element)),element)
-
+                assert listContains(flatten(tree), element)
+                == listContains(flatten(Node(leftnode, rightnode, element)), element)
+                == listContains(Cons(element, append(flatten(leftnode), flatten(rightnode))), element)
+                == (listContains(append(flatten(leftnode), flatten(rightnode)), element) || element == element);
 
         }
 
